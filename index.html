@@ -190,6 +190,7 @@ sqldf(query)</code></pre>
 ## 28 rodrial01   2007    NYA 54
 ## 29 grandcu01   2011    NYA 41
 ## 30 grandcu01   2012    NYA 43</code></pre>
+<p>Adding the Strike Outs into the query we can further filter out which players hit over 40 homeruns AND had less than 60 strike outs with the following:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR,SO FROM Batting
 WHERE HR&gt;=40 and SO&lt;60&quot;
 
@@ -227,6 +228,7 @@ sqldf(query)</code></pre>
 ## 30 bondsba01   2004    SFN 45 41
 ## 31 pujolal01   2004    SLN 46 52
 ## 32 pujolal01   2006    SLN 49 50</code></pre>
+<p>Finally we’re filtering all the teams to just the Phillies, query the years in the 1970’s (using a range), and finally extract the players with more than 30 homeruns:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
 WHERE teamID='PHI' and HR&gt;30 and yearID&lt;=1979 and yearID&gt;=1970&quot;
 
@@ -241,6 +243,7 @@ sqldf(query)</code></pre>
 ## 7 schmimi01   1977    PHI 38
 ## 8 luzingr01   1978    PHI 35
 ## 9 schmimi01   1979    PHI 45</code></pre>
+<p>Now were going to find all the players that hit more than 50 homeruns going from the greatest number to the lowest:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,HR FROM Batting
 WHERE HR&gt;50
 ORDER BY HR DESC&quot;
@@ -283,6 +286,7 @@ sqldf(query)</code></pre>
 ## 34  mayswi01   1955    NY1 51
 ## 35 fieldce01   1990    DET 51
 ## 36 jonesan01   2005    ATL 51</code></pre>
+<p>Finally, we’re going to find the players with less than 10 srtikeouts with atleast 400 at-bats:</p>
 <pre class="r"><code>query&lt;-&quot;SELECT playerID,yearID,teamID,SO,AB FROM Batting
 WHERE SO&lt;10 and AB&gt;=400 
 ORDER BY SO&quot;
