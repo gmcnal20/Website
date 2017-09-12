@@ -68,3 +68,12 @@ ORDER BY SO"
 sqldf(query)
 ```
 
+I'm just practicing. Let's add some more code.
+
+```{r}
+query<-"SELECT HR FROM Batting
+WHERE playerID= 'ruthba01'"
+
+sqldf(query)
+```
+
