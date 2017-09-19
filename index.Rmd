@@ -77,6 +77,8 @@ WHERE playerID= 'ruthba01'"
 sqldf(query)
 ```
 
+##Aggregation 
+
 ```{r}
 query<-"SELECT playerID, sum (HR) FROM Batting
 WHERE playerID='ruthba01'
@@ -94,6 +96,7 @@ ORDER BY sum(HR) DESC"
 sqldf(query)
 ```
 
+##Joining
 ```{r}
 query<-"SELECT nameFirst,nameLast,yearID,teamID,HR 
 FROM Batting INNER JOIN Master
@@ -117,6 +120,20 @@ query<-"SELECT playerID,name,Batting.yearID,Batting.HR
 FROM Batting INNER JOIN Teams
 ON Batting.teamID=Teams.teamID AND Batting.yearID=Teams.yearID
 WHERE playerID='ruthba01'"
+
+sqldf(query)
+```
+
+Heres a list of all the players named Bob who averaged more than one million dollars per year in a salary for their career, including last names:
+
+```{r}
+query<-"SELECT nameFirst,nameLast,avg(salary)
+FROM Salaries INNER JOIN Master
+ON Salaries.playerId=Master.playerID
+WHERE nameFirst='Bob'
+GROUP BY Salaries.playerID
+HAVING avg(salary)>1000000
+ORDER BY avg(salary) DESC"
 
 sqldf(query)
 ```
