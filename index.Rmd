@@ -13,7 +13,7 @@ library(sqldf)
 ```
 
 
-Suppose we want to see the homerun totals for the 1927 Yankees. We could write the following:
+#Suppose we want to see the homerun totals for the 1927 Yankees. We could write the following:
  
 
 ```{r}
@@ -22,7 +22,7 @@ WHERE teamID='NYA' and yearID=1927"
 sqldf(query)
 ```
 
-Suppose we want to find out the amount of Yankees players that have hit 40 or more homeruns. We could write the following:
+#Suppose we want to find out the amount of Yankees players that have hit 40 or more homeruns. We could write the following:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
@@ -30,7 +30,7 @@ WHERE teamID='NYA' and HR>=40"
 sqldf(query)
 ```
 
-Adding the Strike Outs into the query we can further filter out which players hit over 40 homeruns AND had less than 60 strike outs with the following:
+#Adding the Strike Outs into the query we can further filter out which players hit over 40 homeruns AND had less than 60 strike outs with the following:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR,SO FROM Batting
@@ -39,7 +39,7 @@ WHERE HR>=40 and SO<60"
 sqldf(query)
 ```
 
-Finally we’re filtering all the teams to just the Phillies, query the years in the 1970’s (using a range), and finally extract the players with more than 30 homeruns:
+#Finally we’re filtering all the teams to just the Phillies, query the years in the 1970’s (using a range), and finally extract the players with more than 30 homeruns:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
@@ -48,7 +48,7 @@ WHERE teamID='PHI' and HR>30 and yearID<=1979 and yearID>=1970"
 sqldf(query)
 ```
 
-Now were going to find all the players that hit more than 50 homeruns going from the greatest number to the lowest:
+#Now were going to find all the players that hit more than 50 homeruns going from the greatest number to the lowest:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,HR FROM Batting
@@ -58,7 +58,7 @@ ORDER BY HR DESC"
 sqldf(query)
 ```
 
-Finally, we’re going to find the players with less than 10 srtikeouts with atleast 400 at-bats:
+#Finally, we’re going to find the players with less than 10 srtikeouts with atleast 400 at-bats:
 
 ```{r}
 query<-"SELECT playerID,yearID,teamID,SO,AB FROM Batting
@@ -68,11 +68,55 @@ ORDER BY SO"
 sqldf(query)
 ```
 
-I'm just practicing. Let's add some more code.
+#I'm just practicing. Let's add some more code.
 
 ```{r}
 query<-"SELECT HR FROM Batting
 WHERE playerID= 'ruthba01'"
+
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID, sum (HR) FROM Batting
+WHERE playerID='ruthba01'
+GROUP BY playerID"
+
+sqlf(query)
+```
+
+```{r}
+query<-"SELECT playerId, sum(HR) FROM Batting
+GROUP BY playerID
+HAVING sum(HR)>600
+ORDER BY sum(HR) DESC"
+
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT nameFirst,nameLast,yearID,teamID,HR 
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE Batting.playerID='ruthba01'"
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT nameFirst,nameLast,yearID,teamID,HR
+FROM Batting INNER JOIN Master
+ON Batting.playerID=Master.playerID
+WHERE HR>50
+ORDER BY HR DESC"
+
+sqldf(query)
+```
+
+```{r}
+query<-"SELECT playerID,name,Batting.yearID,Batting.HR
+FROM Batting INNER JOIN Teams
+ON Batting.teamID=Teams.teamID AND Batting.yearID=Teams.yearID
+WHERE playerID='ruthba01'"
 
 sqldf(query)
 ```
