@@ -82,7 +82,7 @@ query<-"SELECT playerID, sum (HR) FROM Batting
 WHERE playerID='ruthba01'
 GROUP BY playerID"
 
-sqlf(query)
+sqldf(query)
 ```
 
 ```{r}
